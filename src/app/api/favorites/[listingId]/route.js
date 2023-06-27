@@ -1,8 +1,6 @@
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import { getCurrentUser } from "../../../../../actions/getCurrentUser";
 import { NextResponse } from "next/server";
-import Listing from "../../../../../models/Listing";
 import { connect, disconnect } from "../../../../../database/db";
-import User from "../../../../../models/User";
 
 
 export async function POST(request, { params }) {
@@ -12,6 +10,7 @@ export async function POST(request, { params }) {
     if (!currentUser) {
         return NextResponse.error()
     }
+
 
     const { listingId } = params
 
@@ -23,10 +22,18 @@ export async function POST(request, { params }) {
 
     favoriteIds.push(listingId)
 
-    // save the user with the new favoriteIds
-    await connect()
-    const user = await User.findByIdAndUpdate(currentUser._id, { favoriteIds })
-    await disconnect()
+
+
+
+    const user = await prisma.user.update({
+        where: {
+            id: currentUser.id
+        },
+        data: {
+            favoriteIds
+        }
+    })
+
 
     return NextResponse.json(user)
 }
@@ -50,9 +57,16 @@ export async function DELETE(request, { params }) {
     favoriteIds = favoriteIds.filter(id => id !== listingId)
 
     // save the user with the new favoriteIds
-    await connect()
-    const user = await User.findByIdAndUpdate(currentUser._id, { favoriteIds })
-    await disconnect()
+    // const user = await User.findByIdAndUpdate(currentUser._id, { favoriteIds })
+
+    const user = await prisma.user.update({
+        where: {
+            id: currentUser.id
+        },
+        data: {
+            favoriteIds
+        }
+    })
 
     return NextResponse.json(user)
 }

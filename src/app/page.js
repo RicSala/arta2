@@ -1,31 +1,27 @@
-import ClientOnly from "../../components/ClientOnly";
 import Container from "../../components/Container";
 import EmptyState from "../../components/EmptyState";
 import ListingCard from "../../components/listings/ListingCard";
-import getCurrentUser from "./actions/getCurrentUser";
-import getListings from "./actions/getListings";
+import { getCurrentUser } from "../../actions/getCurrentUser";
+import getListings from "../../actions/getListings";
 
 
-export default async function Home() {
+export default async function Home({ searchParams }) {
 
-  const listings = await getListings();
+  const listings = await getListings(searchParams);
+
   const currentUser = await getCurrentUser();
-
-  console.log("FROM PAGE")
+  // console.log("FROM PAGE USER", currentUser)
 
 
   if (listings.length === 0) {
     return (
-      <ClientOnly>
-        <EmptyState showReset />
-      </ClientOnly>
+      <EmptyState showReset />
     )
   }
 
 
   return (
 
-    // <ClientOnly>
     <Container>
       <div
         className="
@@ -44,14 +40,13 @@ export default async function Home() {
           listings.map(listing => (
             <ListingCard
               currentUser={currentUser}
-              key={listing._id}
+              key={listing.id}
               data={listing}
             />
           ))
         }
       </div>
     </Container>
-    // </ClientOnly>
 
   )
 }

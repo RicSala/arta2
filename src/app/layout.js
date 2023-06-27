@@ -10,7 +10,7 @@ import ToasterProvider from '../../contexts/toaster/ToasterProvider'
 import LoginModal from '../../components/modals/LoginModal'
 import RentModal from '../../components/modals/RentModal'
 import RegisterModal from '../../components/modals/RegisterModal'
-import getCurrentUser from './actions/getCurrentUser'
+import { getCurrentUser } from '../../actions/getCurrentUser'
 
 
 export const metadata = {

@@ -33,7 +33,7 @@ export async function GET(req) {
         const user = await User.findOne({ role: 'artist' });
 
         const tattoos = initialData.tattoos.map(tattoo => {
-            return { ...tattoo, author: user._id }
+            return { ...tattoo, author: user.id }
         })
 
 

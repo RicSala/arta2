@@ -1,8 +1,13 @@
 'use client'
 
+import dynamic from "next/dynamic";
 import useCountries from "../../hooks/useCountries";
 import Avatar from "../Avatar";
 import ListingCategory from "./ListingCategory";
+
+const Map = dynamic(() => import("../Map"), {
+    ssr: false,
+});
 
 const ListingInfo = ({
     user,
@@ -11,12 +16,14 @@ const ListingInfo = ({
     roomCount,
     guessCount,
     bathroomCount,
-    location,
+    locationValue,
 }) => {
 
     const { getByValue } = useCountries();
 
-    const coordinates = getByValue(location)?.latlng;
+    const coordinates = getByValue(locationValue).latlng;
+
+    console.log("location", locationValue)
 
     return (
         <div className="col-span-4 flex flex-col gap-8">
@@ -52,14 +59,17 @@ const ListingInfo = ({
                 </div>
             </div>
             <hr />
-
             <ListingCategory
                 icon={category.icon}
                 label={category.label}
                 description={category.description}
             />
-
-
+            <hr />
+            <div className="text-lg font-light text-neutral-500">
+                {description}
+            </div>
+            <hr />
+            <Map center={coordinates} />
         </div>
     )
 };

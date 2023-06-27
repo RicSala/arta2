@@ -61,7 +61,7 @@ const ListingCard = ({
 
     return (
         <div
-            onClick={() => router.push(`/listings/${data._id}`)}
+            onClick={() => router.push(`/listings/${data.id}`)}
             className="col-span-1 cursor-pointer group"
         >
             <div className="flex flex-col gap-2 w-full">
@@ -83,7 +83,7 @@ const ListingCard = ({
                     />
                     <div className="absolute top-3 right-3">
                         <HeartButton
-                            listingId={data._id}
+                            listingId={data.id}
                             currentUser={currentUser} />
 
                     </div>

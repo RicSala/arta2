@@ -70,9 +70,11 @@ export const authOptions = {
         // that we will add to the token object
         async jwt({ token, account, user }) {
 
+
             // acount exists only when the user is authenticated, not when the token is refreshed
             // so we are basically initializing the token with the account data
             if (account) {
+
                 token.accessToken = account.access_token;
                 switch (account.type) {
 
@@ -100,7 +102,6 @@ export const authOptions = {
                 session.accessToken = token.accessToken;
                 session.user = token.user;
             } catch (error) {
-                console.log("Error en sesión: ", error)
             }
             return session;
         }

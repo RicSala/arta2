@@ -1,6 +1,5 @@
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import { getCurrentUser } from "../../../../actions/getCurrentUser";
 import { NextResponse } from "next/server";
-import Listing from "../../../../models/Listing";
 
 
 export async function POST(request) {
@@ -25,21 +24,36 @@ export async function POST(request) {
         price,
     } = body;
 
-    console.log("BODY", body);
-    console.log("USER", currentUser)
 
-    const listing = await Listing.create({
-        title,
-        description,
-        imageSrc,
-        category,
-        roomCount,
-        bathroomCount,
-        guestCount,
-        locationValue: location.value,
-        price: parseInt(price),
-        userId: currentUser._id
-    });
+    // const listing = await Listing.create({
+    //     title,
+    //     description,
+    //     imageSrc,
+    //     category,
+    //     roomCount,
+    //     bathroomCount,
+    //     guestCount,
+    //     locationValue: location.value,
+    //     price: parseInt(price),
+    //     userId: currentUser._id
+    // });
+
+    // create the listing with prisma instead of mongoose
+    const listing = await prisma.listing.create({
+        data: {
+            title,
+            description,
+            imageSrc,
+            category,
+            roomCount,
+            bathroomCount,
+            guestCount,
+            locationValue: location.value,
+            price: parseInt(price),
+            userId: currentUser.id
+        }
+    })
+
 
     return NextResponse.json(listing)
 

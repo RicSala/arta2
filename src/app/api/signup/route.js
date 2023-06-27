@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import User from '../../../../models/User';
 import { NextResponse } from 'next/server';
 import { isValidEmail } from '../../../../utils/validations';
 import { connect, disconnect } from '../../../../database/db';
+import prisma from '../../../../utils/prismadb';
 
 
 export async function GET(req) {
@@ -14,31 +14,24 @@ export async function GET(req) {
 
 export async function POST(req) {
 
+    console.log("req llega")
+
     const { name, email, city, password, confirmPassword } = await req.json()
-
-    const user = {
-        name,
-        email,
-        city: 'Pending',
-        password,
-        confirmPassword
-    }
-
-
+    console.log("req llega")
 
     // VALIDATIONS ##############################
     if (password.length < 8) {
-        await disconnect(); // TODO is this correct? We are disconnecting before we even connect
+        console.log("password.length < 8")
         return NextResponse.json({ error: 'La contraseña debe tener al menos 8 caracteres' }, { status: '400', })
     }
 
     if (name.length < 3) {
-        await disconnect();
+        console.log("name.length < 3")
         return NextResponse.json({ error: 'El nombre debe tener al menos 3 caracteres' }, { status: '400', })
     }
 
     if (!isValidEmail(email)) {
-        await disconnect();
+        console.log("!isValidEmail(email)")
         return NextResponse.json({ error: 'Por favor, introduce un email válido' }, { status: '400', })
     }
 
@@ -52,48 +45,56 @@ export async function POST(req) {
     //     return NextResponse.json({ status: 'ERROR', error: 'Las contraseñas no coinciden' });
     // }
 
-    await connect();
 
-    // check if user exists
-    const userExists = await User.findOne({ email });
+    // check if user exists using prisma
+    const userExists = await prisma.user.findUnique({
+        where: {
+            email: email.toLowerCase(),
+        }
+    });
+
     if (userExists) {
-        await disconnect();
         return NextResponse.json({ error: 'No ha sido posible realizar el registro - USUARIO' }, { status: '500', })
     }
 
     // if it doesn't exist, create it
-    const newUser = new User({
-        name,
-        email: email.toLowerCase(),
-        city: 'Pending',
-        role: 'user',
-        password,
-        confirmPassword
-        // password: bcrypt.hashSync(password) // TODO: For now we are not going to encrypt the password
-    });
+    // const newUser = new User({
+    //     name,
+    //     email: email.toLowerCase(),
+    //     city: 'Pending',
+    //     role: 'user',
+    //     password,
+    //     confirmPassword
+    //     // password: bcrypt.hashSync(password) // TODO: For now we are not going to encrypt the password
+    // });
 
     try {
-        await newUser.save(
-            {
-                // validateBeforeSave: true, //TODO check what is this
+        // const registeredUser = await newUser.save();
+        console.log("CREATING NEW USER");
+        const newUser = await prisma.user.create({
+            data: {
+                name,
+                email: email.toLowerCase(),
+                // city: 'Pending',
+                // role: 'user',
+                hashedPassword: password,
+                // confirmPassword
             }
-        );
+        })
 
-        await disconnect();
+        console.log("NEW USER CREATED", newUser);
+
+        // save the user in the db
+
+        return NextResponse.json({
+            user: newUser
+        })
+
 
     } catch (error) {
         console.log("Error while saving new user", error);
-        await disconnect();
         return NextResponse.json({ error: 'No ha sido posible realizar el registro - ERROR ON SAVE' }, { status: '500', });
     }
 
-
-
-    await disconnect();
-
-    return NextResponse.json({
-        user: newUser
-        // user: registeredUser
-    });
 
 }

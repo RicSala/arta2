@@ -13,8 +13,6 @@ export async function PUT(req, { params }) {
     // get the updated user from the body of the request
     const updatedUser = await req.json();
 
-    console.log({ id, updatedUser })
-
     // connect to the database
     await connect();
     // find the user by id and update it using findOneAndUpdate

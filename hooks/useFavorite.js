@@ -24,7 +24,6 @@ const useFavorite = ({
     const toggleFavorite = useCallback(async (event) => {
         event.stopPropagation()
 
-        console.log("toggleFavorite", currentUser)
 
         if (!currentUser) return onOpenLoginModal()
 
@@ -37,10 +36,8 @@ const useFavorite = ({
                 request = () => axios.post(`/api/favorites/${listingId}`)
             }
 
-            console.log("request", request)
 
             await request()
-            console.log("request2", request)
             router.refresh()
             toast.success('Favorito actualizado!')
 

@@ -1,5 +1,4 @@
-import User from "../models/User";
-import { connect, disconnect } from "./db";
+import prisma from "../utils/prismadb";
 
 export const checkUserEmailPassword = async (email, password) => {
 
@@ -7,21 +6,28 @@ export const checkUserEmailPassword = async (email, password) => {
         throw new Error("Email y contraseña requeridos");
     }
 
-    await connect();
-    // get the user whose email matches the email passed in
-    const user = await User.findOne({ email }).lean()
-    await disconnect();
+    // get the user using prisma client
+    const user = await prisma.user.findUnique({
+        where: {
+            email: email
+        }
+    })
+
 
     if (!user) {
+        console.log("USUARIO NO ENCONTRADO")
         throw new Error("Credenciales no válidas");
     }
 
     // check if the password passed in matches the password in the db
     // const match = await bcrypt.compare(password, user.password) // TODO: as we are not hashing the password, we don't need to compare it with bcrypt. Change in the future
 
-    const isCorrectPassword = password === user.password;
+    console.log("user", user)
+
+    const isCorrectPassword = password === user.hashedPassword;
 
     if (!isCorrectPassword) {
+        console.log("CONTRASEÑA INCORRECTA")
         throw new Error("Credenciales no válidas");
     }
 
@@ -36,54 +42,51 @@ export const checkUserEmailPassword = async (email, password) => {
 
 export const checkOauthUser = async (oAuthemail, oAuthname, oAuthimage) => {
 
-    await connect();
-    // get the user whose email matches the email passed in
-    const user = await User.findOne({ email: oAuthemail }).lean()
+
+    const user = await prisma.user.findUnique({
+        where: {
+            email: oAuthemail
+        }
+    })
+
 
     if (user) {
-        await disconnect();
         const { role, name, email, _id, profilePic } = user;
         return { role, name, email, _id, profilePic };
     }
 
     // if the user does not exist, we create it
-    const newUser = await User.create({
-        name: oAuthname,
-        email: oAuthemail,
-        profilePic: oAuthimage || undefined,
-        password: "@@@@@@", // TODO: Isn't this a security issue? Shouldn't we generate a random password?
-        role: "user"
-    })
-
-    await disconnect();
-
-    const { role, name, email, _id } = newUser;
-    return { role, name, email, _id, profilePic: oAuthimage }; // why not return newUser? because we don't want to return the some fields like password
-}
 
 
-export const getArtists = async () => {
 
-    await connect();
+    // const newUser = await User.create({
+    //     name: oAuthname,
+    //     email: oAuthemail,
+    //     profilePic: oAuthimage || undefined,
+    //     password: "@@@@@@", // TODO: Isn't this a security issue? Shouldn't we generate a random password?
+    //     role: "user"
+    // })
 
-    const artists = await User.find({ role: "artist" }).lean();
+    // create user with prismadb
 
-    await disconnect();
+    try {
 
-    return artists;
 
-}
+        const newUser = await prisma.user.create({
+            data: {
+                name: oAuthname,
+                email: oAuthemail,
+                image: oAuthimage || undefined,
+                hashedPassword: "@@@@@@", // TODO: Isn't this a security issue? Shouldn't we generate a random password?
+                // role: "user"
+            }
+        })
+        const { role, name, email, _id } = newUser;
+        return { role, name, email, _id, profilePic: oAuthimage }; // why not return newUser? because we don't want to return the some fields like password
+    } catch (error) {
+        console.log("ERROR AL GUARDAR USUARIO EN DB", error)
+    }
 
-export const getUserById = async (id) => {
-
-    await connect();
-
-    const user = await User.findById(id).lean();
-
-    await disconnect();
-
-    return user;
 
 }
-
 
