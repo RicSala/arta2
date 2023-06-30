@@ -54,39 +54,3 @@ export async function GET(req) {
     }
 
 }
-
-
-// REVIEW: why this didn't work when creating a function and using it on the GET method??
-
-// // Seed the database
-// async function handler(req) {
-//     // only allow purge requests
-//     if (req.method !== 'PURGE') {
-//         return NextResponse.json({ status: 'ERROR', error: 'Your are not allowed to do that' });
-//     }
-
-//     if (process.env.NODE_ENV === 'production') {
-//         return NextResponse.json({ status: 'ERROR', error: 'Your are not allowed to do that' });
-//     }
-
-//     try {
-//         await connect();
-
-//         await User.deleteMany({});
-//         // await Product.deleteMany({});
-//         // await Order.deleteMany({});
-//         await User.insertMany(initialData.users);
-//         // await Product.insertMany(database.initialData.products);
-
-//         await disconnect();
-
-
-//         return NextResponse.json({ count: 101 });
-
-//     } catch (error) {
-
-
-//         return NextResponse.json({ status: 'ERROR' });
-//     }
-
-// }

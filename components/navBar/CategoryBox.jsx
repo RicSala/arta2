@@ -4,32 +4,32 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import qs from "query-string";
 
-// TODO: I am gonna try to do it like this, but I am not sure if this is gonna work
+// I am gonna try to do it like this, but I am not sure if this is gonna work
 // UPDATE: It works, but I am not sure if it is safe, so I am gonna use qs library
 
-const getAllQueryParams = (params) => {
-    let query = {};
-    let paramkeys = [
-        'category',
-    ]
+// const getAllQueryParams = (params) => {
+//     let query = {};
+//     let paramkeys = [
+//         'category',
+//     ]
 
-    paramkeys.forEach((key) => {
-        params.get(key) && (query[key] = params.get(key));
-    });
-    return query;
-}
+//     paramkeys.forEach((key) => {
+//         params.get(key) && (query[key] = params.get(key));
+//     });
+//     return query;
+// }
 
 
-// given a query object, return a string of query params, skipping null values
-const getQueryString = (query) => {
-    let queryString = '';
-    Object.keys(query).forEach((key) => {
-        if (query[key]) {
-            queryString += `${key}=${query[key]}&`;
-        }
-    });
-    return queryString;
-}
+// // given a query object, return a string of query params, skipping null values
+// const getQueryString = (query) => {
+//     let queryString = '';
+//     Object.keys(query).forEach((key) => {
+//         if (query[key]) {
+//             queryString += `${key}=${query[key]}&`;
+//         }
+//     });
+//     return queryString;
+// }
 
 
 const CategoryBox = ({

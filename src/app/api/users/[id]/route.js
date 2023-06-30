@@ -5,8 +5,6 @@ import User from "../../../../../models/User";
 
 export async function PUT(req, { params }) {
 
-    // TODO: Not working! How do I get the id from the url in Next13?
-
     // get the id from the params
     const { id } = params;
 

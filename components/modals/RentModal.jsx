@@ -18,6 +18,10 @@ import { useRouter } from "next/navigation";
 import CategoryInput from "../inputs/CategoryInput";
 // import Map from "../Map";
 
+import { DevTool } from "@hookform/devtools"; // to be deleted
+// TODO: somehow, the title is changing when going back from the price step to the description step
+
+
 // create an enum for the steps
 const STEPS = {
     CATEGORY: 0,
@@ -44,7 +48,7 @@ const RentModal = ({ }) => {
     // We don't use register because it's not a controlled form. We are using the "watch" hook instead,
     // combined with the "setValue" hook
     // setValue does not trigger re-rendering, so we need to use "watch" to do that // TODO: check this 
-    const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm({
+    const { control, register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm({
         defaultValues:
         {
             category: '',
@@ -157,6 +161,7 @@ const RentModal = ({ }) => {
         return step === STEPS.CATEGORY ? undefined : "Atras";
     }, [step]);
 
+
     // Actually I think bodyContent could be memoized too
     let bodyContent = (
         <div className="flex flex-col gap-8">
@@ -257,7 +262,7 @@ const RentModal = ({ }) => {
         )
     }
 
-    // REVIEW: It's mixing the values from price with title and not triggering the validation
+    // TODO: not triggering the validation
     if (step === STEPS.DESCRIPTION) {
         bodyContent = (
             <div className="flex flex-col gap-8">
@@ -268,7 +273,7 @@ const RentModal = ({ }) => {
                     label="Título"
                     disable={isLoading}
                     errors={errors}
-                    required={true}
+                    required
                     register={register}
                 />
                 <hr />
@@ -277,7 +282,7 @@ const RentModal = ({ }) => {
                     label="Descripción"
                     disable={isLoading}
                     errors={errors}
-                    required={true}
+                    required
                     register={register}
                 />
 
@@ -328,7 +333,6 @@ const RentModal = ({ }) => {
             secondaryActionLabel={secondaryActionLabel}
             body={bodyContent}
         />
-
     )
 };
 

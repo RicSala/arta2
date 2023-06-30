@@ -22,6 +22,8 @@ export default async function Home({ searchParams }) {
   // throw new Error("This is an error") // To test the Error component in the root of the app
 
 
+
+
   return (
 
     <Container>

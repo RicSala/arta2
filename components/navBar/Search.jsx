@@ -1,6 +1,6 @@
 'use client'
 
-import { Bisearch } from 'react-icons/bi';
+import { BiSearch } from 'react-icons/bi';
 import { UiContext, UiProvider } from '../../contexts/ui/UiProvider';
 import { useContext, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -115,8 +115,7 @@ const Search = () => {
                       rounded-full
                       text-white  
                     ">
-                        {/*TODO:  For some reason the icon is not working, */}
-                        {/* <Bisearch /> */}
+                        <BiSearch size={15} />
 
 
 

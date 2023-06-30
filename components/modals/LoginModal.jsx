@@ -12,6 +12,7 @@ import Button from '../Button';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+
 const LoginModal = ({ }) => {
 
     const router = useRouter();
@@ -27,13 +28,15 @@ const LoginModal = ({ }) => {
         , [onCloseLoginModal, onOpenRegisterModal]);
 
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues:
         {
             email: 'ricardo@google.com',
             password: '88888888',
         }
     });
+
+
 
     const onSubmit = async (data) => {
         setIsLoading(true);
@@ -122,6 +125,7 @@ const LoginModal = ({ }) => {
     )
 
     return (
+
         <Modal
             disabled={isLoading}
             isOpen={LoginModalisOpen}
@@ -133,6 +137,7 @@ const LoginModal = ({ }) => {
             body={bodyContent}
             footer={footerContent}
         />
+
     )
 };
 

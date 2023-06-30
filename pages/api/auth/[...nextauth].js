@@ -1,5 +1,5 @@
 // [...nextauth] means that any route after /api/auth/ will be handled by this file, even if it has multiple segments.
-// REVIEW: I think this is in the clien, so the use of checkUserEmail and checkOauthUser 
+// REVIEW: I think this is in the client?, so the use of checkUserEmail and checkOauthUser 
 // here can be problematic because they are database functions (they use mongoose)
 
 import NextAuth from "next-auth"
@@ -57,7 +57,6 @@ export const authOptions = {
 
 
 
-    // REVIEW: I am gonna remove the callbacks and use the jwt and session default callbacks
     secret: process.env.NEXTAUTH_SECRET,
 
     // callbacks

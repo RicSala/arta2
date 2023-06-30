@@ -11,7 +11,7 @@ const CountrySelect = ({
 
     const { getAll, getByValue } = useCountries();
 
-    // REVIEW: It's not printing the flags
+    // TODO: It's not printing the flags
 
     return (
         <div>

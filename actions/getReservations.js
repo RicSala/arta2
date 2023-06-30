@@ -27,7 +27,7 @@ export async function getReservations(params) {
         const reservations = await prisma.reservation.findMany({
             where: query,
             include: {
-                listing: true // REVIEW: what is this doing? adding it to the doc or adding it to the response? --> adding it to the response
+                listing: true // This is adding it to the response
             },
             orderBy: {
                 createdAt: "desc"

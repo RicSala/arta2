@@ -11,38 +11,6 @@ import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 
-// const menuItems = [
-//     {
-//         path: "/tatuadores",
-//         // icon: <IoBrowsersOutline size={40} />,
-//         title: "Tatuadores",
-//         subtitle: "Visualización de datos",
-//     },
-//     {
-//         path: "/tatuajes",
-//         // icon: <IoBrowsersOutline size={40} />,
-//         title: "Tatuajes",
-//         subtitle: "Visualización de datos",
-//     },
-//     {
-//         path: "/blog",
-//         // icon: <IoBrowsersOutline size={40} />,
-//         title: "Blog",
-//         subtitle: "Visualización de datos",
-//     },
-
-//     {
-//         path: "/profile",
-//         title: "Mi perfil",
-//         subtitle: "Configura tu perfil",
-//     }
-//     ,
-//     {
-//         path: "/works",
-//         title: "Mis piezas",
-//         subtitle: "Edita tus piezas",
-//     }
-// ];
 
 async function NavBar({
     currentUser,

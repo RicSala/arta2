@@ -1,4 +1,4 @@
-'use client' // TODO: this should be client
+'use client'
 
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import Container from "../../../../components/Container";
@@ -93,8 +93,6 @@ const ListingClient = ({
         return categories.find(category => category._id === listing.categoryId);
     }, [listing]);
 
-    // TODO: change this for the client version when we find the problem
-    // const category = categories.find(category => category._id === listing.categoryId);
     return (
         <Container>
             <div className="max-w-screen-lg mx-auto">
