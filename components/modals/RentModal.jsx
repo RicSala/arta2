@@ -48,7 +48,7 @@ const RentModal = ({ }) => {
     // We don't use register because it's not a controlled form. We are using the "watch" hook instead,
     // combined with the "setValue" hook
     // setValue does not trigger re-rendering, so we need to use "watch" to do that // TODO: check this 
-    const { control, register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm({
+    const { setError, clearErrors, control, register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm({
         defaultValues:
         {
             category: '',
@@ -106,10 +106,31 @@ const RentModal = ({ }) => {
 
 
     const onSubmit = (data) => {
+
         if (step !== STEPS.PRICE) {
+
+            if (!category && step === STEPS.CATEGORY) { // TODO: improve this validation....
+                toast.error("Selecciona una categoría");
+                // clear the error
+                return
+            }
+
+
+            if (!location && step === STEPS.LOCATION) {
+                toast.error("Selecciona una ubicación");
+                return
+            }
+
+
+            if (!imageSrc && step === STEPS.IMAGES) {
+                toast.error("Sube al menos una imagen");
+                return
+            }
+
             onNext();
             return;
         }
+
 
         setIsLoading(true);
         axios.post('/api/listings', data)
@@ -128,6 +149,8 @@ const RentModal = ({ }) => {
                 setIsLoading(false);
             })
     }
+
+
 
 
     useEffect(() => {
@@ -153,8 +176,11 @@ const RentModal = ({ }) => {
     // We want to use useMemo because we don't want to calculate the value of the actionLabel every time the component renders
     // just when the value of the step changes
     const actionLabel = useMemo(() => {
-        return step === STEPS.PRICE ? "Publicar" : "Siguiente";
-    }, [step]);
+        return step === STEPS.PRICE ?
+            isLoading ? "Publicando..." :
+                "Publicar"
+            : "Siguiente";
+    }, [isLoading, step]);
 
 
     const secondaryActionLabel = useMemo(() => {
@@ -190,6 +216,7 @@ const RentModal = ({ }) => {
                                     // print the value of the category field
                                 }
                             }
+                            required
                         // it's not just customSetValue('category', category) because we are passing a function to the onClick prop, not the execution of the function
                         // also because we needed the category parameter which is coming from each category in the map
                         // REVIEW: Why is it different from https://github.com/AntonioErdeljac/next13-airbnb-clone/blob/master/app/components/modals/RentModal.tsx
@@ -323,10 +350,11 @@ const RentModal = ({ }) => {
             onClose={onCloseRentModal}
             onOpen={onOpenRentModal}
             onSubmit={
-                step === STEPS.PRICE ? handleSubmit(onSubmit) : onNext
+                handleSubmit(onSubmit)
+                // step === STEPS.PRICE ? handleSubmit(onSubmit) : onNext
             }
             actionLabel={actionLabel}
-            disabled={false}
+            disabled={isLoading}
             secondaryAction={
                 step === STEPS.LOCATION || step === STEPS.INFO || step === STEPS.IMAGES || step === STEPS.DESCRIPTION || step === STEPS.PRICE ? onBack : undefined
             }

@@ -36,6 +36,9 @@ const LoginModal = ({ }) => {
         }
     });
 
+    console.log("ERRORS", errors)
+
+
 
 
     const onSubmit = async (data) => {
@@ -60,6 +63,7 @@ const LoginModal = ({ }) => {
         )
 
     }
+
 
     const bodyContent = (
         <div className='flex flex-col gap-4'>
