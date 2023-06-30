@@ -49,6 +49,7 @@ const SearchModal = ({
         setStep((prev) => prev - 1);
     }, []);
 
+
     const onNext = useCallback(() => {
         setStep((prev) => prev + 1);
     }, []);
@@ -61,12 +62,14 @@ const SearchModal = ({
         return 'Siguiente'; // otherwise, label should be 'Siguiente'
     }, [step]);
 
+
     const secondaryActionLabel = useMemo(() => {
         if (step === STEPS.LOCATION) { // if user is in the first step, we don't show "Atras" (there are no previous steps)
             return undefined;
         }
         return 'Atras';
     }, [step]);
+
 
 
     const onSubmit = useCallback(() => {
@@ -81,11 +84,12 @@ const SearchModal = ({
 
         const updatedQuery = {
             ...currentQuery,
-            locationValue: location,
+            locationValue: location?.value,
             guestCount,
             roomCount,
             bathRoomCount,
         };
+
 
         if (dateRange.startDate) {
             updatedQuery.startDate = formatISO(dateRange.startDate);

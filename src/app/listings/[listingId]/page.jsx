@@ -2,7 +2,7 @@ import getListingById from "../../../../actions/getListingById";
 import ClientOnly from "../../../../components/ClientOnly";
 import EmptyState from "../../../../components/EmptyState";
 import { getCurrentUser } from "../../../../actions/getCurrentUser";
-import ListingClient from "../../../../components/listings/ListingClient";
+import ListingClient from "./ListingClient";
 import TestComponent from "../../../../components/listings/TestComponent";
 import ListingInfo from "../../../../components/listings/ListingInfo";
 import Container from "../../../../components/Container";

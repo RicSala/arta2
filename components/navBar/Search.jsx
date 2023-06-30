@@ -2,11 +2,49 @@
 
 import { Bisearch } from 'react-icons/bi';
 import { UiContext, UiProvider } from '../../contexts/ui/UiProvider';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
+import useCountries from '../../hooks/useCountries';
+import { differenceInDays } from 'date-fns';
 
 const Search = () => {
 
     const { onOpenSearchModal } = useContext(UiContext);
+    const params = useSearchParams();
+    const countries = useCountries();
+
+    const location = params.get('locationValue') || 'Cualquier sitio';
+    const startDate = params.get('startDate');
+    const endDate = params.get('endDate');
+    const guestCount = params.get('guestCount') || 'Añade huéspedes';
+
+
+    const locationLabel = useMemo(() => {
+        if (location === 'Cualquier sitio') {
+            return 'Cualquier sitio'
+        }
+
+        const country = countries.getByValue(location);
+        return country.label
+    }
+        , [location, countries]);
+
+
+    const duration = useMemo(() => {
+        if (!startDate || !endDate) {
+            return 'Cualquier fecha'
+        }
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        let diff = differenceInDays(end, start);
+
+        if (diff === 0) { diff = 1 }
+
+        return `${diff} noche${diff > 1 ? 's' : ''}`
+
+    }, [startDate, endDate]);
 
 
     return (
@@ -37,7 +75,7 @@ const Search = () => {
                 font-semibold
                 px-6
                 ">
-                    Anywhere
+                    {locationLabel}
                 </div>
 
                 <div className="
@@ -50,7 +88,7 @@ const Search = () => {
                 flex-1
                 text-center
                 ">
-                    Any Week
+                    {duration}
                 </div>
 
                 <div
@@ -64,7 +102,13 @@ const Search = () => {
                     items-center
                     gap-3
                     ">
-                    <div className="hidden sm:block"> Add Guests</div>
+                    <div className="hidden sm:block">
+                        {
+                            guestCount === 'Añade huéspedes' ? 'Añade huéspedes' :
+                                guestCount === '1' ? '1 persona' : `${guestCount} personas`
+                        }
+
+                    </div>
                     <div className="
                       p-2
                       bg-rose-500

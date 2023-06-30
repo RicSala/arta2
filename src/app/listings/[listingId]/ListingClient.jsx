@@ -1,16 +1,16 @@
 'use client' // TODO: this should be client
 
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import Container from "../Container";
-import ListingHead from "./ListingHead";
-import ListingInfo from "./ListingInfo";
-import { categories } from "../navBar/Categories";
+import Container from "../../../../components/Container";
+import ListingHead from "../../../../components/listings/ListingHead";
+import ListingInfo from "../../../../components/listings/ListingInfo";
+import { categories } from "../../../../components/navBar/Categories";
 import { useRouter } from "next/navigation";
 import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from "date-fns";
-import { UiContext } from "../../contexts/ui/UiProvider";
+import { UiContext } from "../../../../contexts/ui/UiProvider";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import ListingReservation from "./ListingReservation";
+import ListingReservation from "../../../../components/listings/ListingReservation";
 
 const initialDateRange = {
     startDate: new Date(),

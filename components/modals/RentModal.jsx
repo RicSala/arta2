@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { UiContext } from "../../contexts/ui/UiProvider";
 import Modal from "./Modal";
 import Heading from "../Heading";
@@ -124,6 +124,24 @@ const RentModal = ({ }) => {
                 setIsLoading(false);
             })
     }
+
+
+    useEffect(() => {
+        const handleEnterKey = (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                onSubmit();
+            }
+        };
+
+        window.addEventListener('keydown', handleEnterKey);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('keydown', handleEnterKey);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
 
