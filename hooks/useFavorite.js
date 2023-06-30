@@ -16,6 +16,8 @@ const useFavorite = ({
 
     // why do we use useMemo here? => so we don't have to recalculate the value every time the component re-renders
     // could be heavy because of the includes() method
+    // everytime the component that use the hook re-renders, the hook will be called again
+    // it's like "embedding" the logic inside the component
     const hasFavorited = useMemo(() => {
         return currentUser?.favoriteIds?.includes(listingId)
     }, [currentUser, listingId])

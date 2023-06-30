@@ -11,7 +11,7 @@ import countries from "world-countries";
 const formattedCountries = countries.map((country) => ({
     label: country.name.common,
     value: country.cca2,
-    flag: country.flag,
+    flag: country.flag, // TODO: if you are not getting the flag, the problem is probably here
     latlng: country.latlng,
     region: country.region,
 }));

@@ -44,6 +44,14 @@ export const UiProvider = ({ children }) => {
         dispatch({ type: '[UI] - onClose Rent modal' });
     };
 
+    const onOpenSearchModal = () => {
+        dispatch({ type: '[UI] - onOpen Search modal' });
+    };
+
+    const onCloseSearchModal = () => {
+        dispatch({ type: '[UI] - onClose Search modal' });
+    };
+
     // We return the state and the methods so we can use them in the components
     return (
         <UiContext.Provider value={{
@@ -57,6 +65,8 @@ export const UiProvider = ({ children }) => {
             onCloseLoginModal,
             onOpenRentModal,
             onCloseRentModal,
+            onOpenSearchModal,
+            onCloseSearchModal,
         }}>
             {children}
         </UiContext.Provider>

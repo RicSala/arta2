@@ -2,7 +2,7 @@
 
 import { AiOutlineMenu } from 'react-icons/ai';
 import Avatar from '../Avatar';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import MenuItem from './MenuItem';
 import { UiContext } from '../../contexts/ui/UiProvider';
 import { signOut } from 'next-auth/react';
@@ -12,9 +12,27 @@ const UserMenu = ({
     currentUser,
 }) => {
 
+    // Snippet to close the menu when clicking outside of it
+    const menuRef = useRef(null);
     const router = useRouter();
     const { onOpenRegisterModal, onOpenLoginModal, onOpenRentModal } = useContext(UiContext);
     const [isOpen, setIsOpen] = useState(false)
+
+    const handleClickOutside = useCallback((event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [handleClickOutside]);
+    // End of snippet (ref added to the div below)
+
+
 
     const toggleOpen = useCallback(() => {
         setIsOpen((prev) => !prev)
@@ -31,7 +49,7 @@ const UserMenu = ({
 
 
     return (
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
             <div className="flex flex-row items-center gap-3">
                 <div
                     onClick={onRent}
@@ -108,16 +126,16 @@ const UserMenu = ({
                                     label="Mis favoritos"
                                 />
                                 <MenuItem
-                                    onClick={() => { }}
-                                    label="My reservations"
+                                    onClick={() => { router.push("/trips") }}
+                                    label="Mis viajes"
                                 />
                                 <MenuItem
-                                    onClick={() => { router.push("/my-listings") }}
+                                    onClick={() => { router.push("/properties") }}
                                     label="Mis propiedades"
                                 />
                                 <MenuItem
-                                    onClick={() => { }}
-                                    label="Mi perfil"
+                                    onClick={() => { router.push("/reservations") }}
+                                    label="Reservas de tus propiedades"
                                 />
                                 <MenuItem
                                     onClick={onOpenRentModal}

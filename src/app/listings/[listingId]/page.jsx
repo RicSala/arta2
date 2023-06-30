@@ -6,10 +6,12 @@ import ListingClient from "../../../../components/listings/ListingClient";
 import TestComponent from "../../../../components/listings/TestComponent";
 import ListingInfo from "../../../../components/listings/ListingInfo";
 import Container from "../../../../components/Container";
+import { getReservations } from "../../../../actions/getReservations";
 
 const ListingPage = async ({ params }) => {
 
     const listing = await getListingById(params);
+    const reservations = await getReservations(params);
     const currentUser = await getCurrentUser();
 
     if (!listing) {
@@ -24,6 +26,7 @@ const ListingPage = async ({ params }) => {
             <ListingClient
                 listing={listing}
                 currentUser={currentUser}
+                reservations={reservations}
             />
 
         </>

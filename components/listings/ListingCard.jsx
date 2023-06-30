@@ -51,7 +51,7 @@ const ListingCard = ({
         const start = new Date(reservation.startDate);
         const end = new Date(reservation.endDate)
 
-        return `${format(start, 'PP')}` - `${format(end, 'PP')}`
+        return `${format(start, 'PP')} - ${format(end, 'PP')}`
 
     }, [reservation])
 

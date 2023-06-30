@@ -4,20 +4,23 @@ import dynamic from "next/dynamic";
 import useCountries from "../../hooks/useCountries";
 import Avatar from "../Avatar";
 import ListingCategory from "./ListingCategory";
+import { useMemo } from "react";
 
-const Map = dynamic(() => import("../Map"), {
-    ssr: false,
-});
 
 const ListingInfo = ({
     user,
     category,
     description,
     roomCount,
-    guessCount,
+    guestCount,
     bathroomCount,
     locationValue,
 }) => {
+
+    const Map = useMemo(() => dynamic(() => import("../Map"), {
+        ssr: false,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }), [locationValue]);
 
     const { getByValue } = useCountries();
 
@@ -37,7 +40,7 @@ const ListingInfo = ({
                     items-center
                     gap-2
                     ">
-                    <div>Hosting by {user?.name}</div>
+                    <div>Hosted by {user?.name}</div>
                     <Avatar src={user?.avatar} />
                 </div>
                 <div className="
@@ -50,6 +53,9 @@ const ListingInfo = ({
                     {/* <div>
                         {guessCount} personas
                     </div> */}
+                    <div>
+                        {guestCount} huéspedes
+                    </div>
                     <div>
                         {roomCount} habitaciones
                     </div>

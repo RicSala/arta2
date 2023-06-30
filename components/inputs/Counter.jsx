@@ -7,12 +7,14 @@ const Counter = ({
     title,
     subtitle,
     value,
-    onChange,
+    onChange, // this is a function that will be called when the value changes (in our case increased or decreased by 1)
 }) => {
+
+    // These is a dummy component too, even if it makes use of hooks, it does not have any logic nor state
 
     // we are not modifying the props here, we are just
     // creating a new function that will be called when the value changes
-    // and THAT function will modify the props
+    // and that function will call the onChange function that was passed
     const onAdd = useCallback(() => {
         onChange(value + 1);
     }, [value, onChange]);

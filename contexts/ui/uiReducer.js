@@ -35,6 +35,17 @@ export const uiReducer = (state, action) => {
         ...state,
         RentModalisOpen: false,
       };
+    case '[UI] - onOpen Search modal':
+      return {
+        ...state,
+        SearchModalisOpen: true,
+      };
+
+    case '[UI] - onClose Search modal':
+      return {
+        ...state,
+        SearchModalisOpen: false,
+      };
 
 
     default:

@@ -4,32 +4,33 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button";
 
-const Modal = (
-    { isOpen,
-        onClose,
+const Modal = ( //all the props we need to customize the modal
+    { isOpen, // is the modal open?
+        onClose, // when closing the model, what else should we do? We don't need an onOpen, because we are not opening the modal from here
         onSubmit,
         title,
         body,
         footer,
-        actionLabel,
-        disabled,
+        actionLabel,  // custom label for the action button
+        disabled, // is the action button disabled?
         secondaryAction,
         secondaryActionLabel, }
 ) => {
 
     const [showModal, setShowModal] = useState(isOpen);
+    // it use props as its initial state.
 
     const modalRef = useRef();
 
 
-    useEffect(() => {
+    useEffect(() => { // whenever isOpen changes, we update the state of the modal. useState arg is only the initial state
         setShowModal(isOpen);
     }, [isOpen]);
 
     const handleClose = useCallback(() => {
         if (disabled) return;
         setShowModal(false);
-        setTimeout(() => {
+        setTimeout(() => { // we wait for the animation to finish before closing the modal, so it doesn't disappear abruptly
             onClose();
         }, 300);
     }, [disabled, onClose]);
@@ -42,7 +43,7 @@ const Modal = (
 
     const handleSubmit = useCallback(() => {
         if (disabled) return;
-        onSubmit();
+        onSubmit(); // REVIEW: how does the modal dissapear after submitting? --> it's closed on the parent component
     }, [disabled, onSubmit]);
 
     const handleSecondaryAction = useCallback(() => {
@@ -52,6 +53,7 @@ const Modal = (
     }, [disabled, secondaryAction]);
 
 
+    // if (!isOpen) we don't even render the modal (it's not that we display:none it)
     if (!isOpen) return null;
 
     return (

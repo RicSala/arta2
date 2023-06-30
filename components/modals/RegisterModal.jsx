@@ -141,7 +141,7 @@ const RegisterModal = ({ }) => {
             title="Regístrate"
             actionLabel={isLoading ? 'Cargando...' : 'Registrarme'}
             onClose={onCloseRegisterModal}
-            onOpen={onOpenRegisterModal}
+            onOpen={onOpenRegisterModal} // we are actually not using this prop
             onSubmit={handleSubmit(onSubmit)}
             body={bodyContent}
             footer={footerContent}

@@ -99,7 +99,7 @@ const Categories = ({ }) => {
 
     const isMainPage = pathName === '/';
 
-    if (!isMainPage) {
+    if (!isMainPage) { // if we are not in the main page, we don't render the categories
         return null;
     }
 

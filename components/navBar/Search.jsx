@@ -1,10 +1,18 @@
 'use client'
 
 import { Bisearch } from 'react-icons/bi';
+import { UiContext, UiProvider } from '../../contexts/ui/UiProvider';
+import { useContext } from 'react';
 
 const Search = () => {
+
+    const { onOpenSearchModal } = useContext(UiContext);
+
+
     return (
-        <div className="
+        <div
+            onClick={onOpenSearchModal}
+            className="
         border-[1px]
         w-full
         md:w-auto

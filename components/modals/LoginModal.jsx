@@ -1,12 +1,9 @@
 'use client'
 
-import axios from 'axios';
-import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useCallback, useContext, useState } from 'react';
 import Modal from './Modal';
-import { BiHeading } from 'react-icons/bi';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
 import { toast } from 'react-hot-toast';
@@ -20,6 +17,7 @@ const LoginModal = ({ }) => {
     const router = useRouter();
 
     const { LoginModalisOpen, onCloseLoginModal, onOpenLoginModal, onOpenRegisterModal } = useContext(UiContext);
+    const [isLoading, setIsLoading] = useState(false);
 
     const toggleModal = useCallback(
         () => {
@@ -29,7 +27,6 @@ const LoginModal = ({ }) => {
         , [onCloseLoginModal, onOpenRegisterModal]);
 
 
-    const [isLoading, setIsLoading] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues:
         {
@@ -46,7 +43,7 @@ const LoginModal = ({ }) => {
         }).then(
             (res) => {
                 setIsLoading(false);
-                if (!res.error) {
+                if (!res.error) { //why is not using catch? doesn't it return an error?
                     toast.success('¡Bienvenido a Tattuo! 🎉');
                     router.refresh();
                     onCloseLoginModal();

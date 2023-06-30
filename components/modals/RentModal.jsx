@@ -41,9 +41,9 @@ const RentModal = ({ }) => {
     const router = useRouter();
 
 
-    // setValue does not trigger re-rendering, so we need to use "watch" to do that
     // We don't use register because it's not a controlled form. We are using the "watch" hook instead,
     // combined with the "setValue" hook
+    // setValue does not trigger re-rendering, so we need to use "watch" to do that // TODO: check this 
     const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm({
         defaultValues:
         {
@@ -68,7 +68,7 @@ const RentModal = ({ }) => {
     const bathroomCount = watch('bathroomCount');
     const imageSrc = watch('imageSrc');
 
-    // REVIEW: why do we need dynamic import here?
+    // REVIEW: why do we need dynamic import here? --> Probably because this component is not rendered on the server-side, needs the browser to apis
     const Map = useMemo(() => {
         return dynamic(() => import('../Map'), {
             ssr: false,
@@ -239,7 +239,7 @@ const RentModal = ({ }) => {
         )
     }
 
-
+    // REVIEW: It's mixing the values from price with title and not triggering the validation
     if (step === STEPS.DESCRIPTION) {
         bodyContent = (
             <div className="flex flex-col gap-8">

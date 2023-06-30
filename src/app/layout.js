@@ -11,6 +11,7 @@ import LoginModal from '../../components/modals/LoginModal'
 import RentModal from '../../components/modals/RentModal'
 import RegisterModal from '../../components/modals/RegisterModal'
 import { getCurrentUser } from '../../actions/getCurrentUser'
+import SearchModal from '../../components/modals/SearchModal'
 
 
 export const metadata = {
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }) {
           <AuthProvider>
             <UiProvider>
               <ToasterProvider />
+              <SearchModal />
               <LoginModal />
               <RentModal />
               <RegisterModal />
