@@ -14,9 +14,6 @@ const TripsClient = ({
 
 }) => {
 
-    console.log(reservations)
-
-
     const router = useRouter();
     const [deletingId, setDeletingId] = useState(null);
 
@@ -64,6 +61,7 @@ const TripsClient = ({
                                 actionId={reservation.id}
                                 onAction={onCancel}
                                 actionLabel={deletingId === reservation.id ? "Cancelando..." : "Cancelar"}
+                                currentUser={currentUser}
                             />
                         )
                     })

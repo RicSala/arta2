@@ -1,6 +1,6 @@
 import { getCurrentUser } from "../../../../../actions/getCurrentUser";
 import { NextResponse } from "next/server";
-import { connect, disconnect } from "../../../../../database/db";
+import prisma from "../../../../../utils/prismadb";
 
 
 export async function POST(request, { params }) {

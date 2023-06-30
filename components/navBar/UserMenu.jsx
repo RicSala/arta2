@@ -91,7 +91,7 @@ const UserMenu = ({
                     <AiOutlineMenu size={20} />
 
                     <div className="hidden md:block">
-                        <Avatar />
+                        <Avatar user={currentUser} />
                     </div>
 
                 </div>
@@ -118,28 +118,28 @@ const UserMenu = ({
 
                             <>
                                 <MenuItem
-                                    onClick={() => { }}
-                                    label="My trips"
-                                />
-                                <MenuItem
+                                    onMouseEnter={() => router.prefetch("/favorites")}
                                     onClick={() => { router.push("/favorites") }}
                                     label="Mis favoritos"
                                 />
                                 <MenuItem
+                                    onMouseEnter={() => router.prefetch("/trips")}
                                     onClick={() => { router.push("/trips") }}
                                     label="Mis viajes"
                                 />
                                 <MenuItem
+                                    onMouseEnter={() => router.prefetch("/properties")}
                                     onClick={() => { router.push("/properties") }}
                                     label="Mis propiedades"
                                 />
                                 <MenuItem
+                                    onMouseEnter={() => router.prefetch("/reservations")}
                                     onClick={() => { router.push("/reservations") }}
                                     label="Reservas de tus propiedades"
                                 />
                                 <MenuItem
                                     onClick={onOpenRentModal}
-                                    label="Airbnb my home"
+                                    label="Publica tu casa"
                                 />
                                 <hr />
                                 <MenuItem

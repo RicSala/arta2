@@ -3,7 +3,6 @@
 // here can be problematic because they are database functions (they use mongoose)
 
 import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
 import Credentials from "next-auth/providers/credentials" // provider for custom login with email and password
 import GoogleProvider from "next-auth/providers/google"
 

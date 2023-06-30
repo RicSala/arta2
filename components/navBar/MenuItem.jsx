@@ -1,8 +1,9 @@
 'use client'
 
-const MenuItem = ({ onClick, label }) => {
+const MenuItem = ({ onClick, label, onMouseEnter }) => {
     return (
         <div
+            onMouseEnter={onMouseEnter}
             onClick={onClick}
             className="
                 px-4

@@ -26,8 +26,6 @@ const ListingInfo = ({
 
     const coordinates = getByValue(locationValue).latlng;
 
-    console.log("location", locationValue)
-
     return (
         <div className="col-span-4 flex flex-col gap-8">
             <div className=" flex flex-col gap-2">
@@ -41,7 +39,7 @@ const ListingInfo = ({
                     gap-2
                     ">
                     <div>Hosted by {user?.name}</div>
-                    <Avatar src={user?.avatar} />
+                    <Avatar src={user} />
                 </div>
                 <div className="
                 flex

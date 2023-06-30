@@ -63,6 +63,7 @@ const PropertiesClient = ({
                                 onAction={onCancel}
                                 disabled={deletingId === listing.id}
                                 actionLabel={deletingId === listing.id ? "Borrando..." : "Borrar"}
+                                currentUser={currentUser}
                             />
                         )
                     })

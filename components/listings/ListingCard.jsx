@@ -62,6 +62,7 @@ const ListingCard = ({
 
     return (
         <div
+            onMouseEnter={() => router.prefetch(`/listings/${data.id}`)} // With Link, the prefetch is automatic, with router is not
             onClick={() => router.push(`/listings/${data.id}`)}
             className="col-span-1 cursor-pointer group"
         >

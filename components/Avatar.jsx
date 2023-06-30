@@ -5,9 +5,9 @@ import { useContext } from "react"
 import { AuthContext } from "../contexts/auth/AuthProvider"
 
 
-export default function Avatar(props) {
-
-    const { user } = useContext(AuthContext)
+export default function Avatar({
+    user,
+}) {
 
     return (
         <div className="rounded-full h-8 w-8 flex items-center justify-center bg-gray-400">

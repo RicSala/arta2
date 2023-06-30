@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { connect, disconnect } from "../../../../database/db";
 import { initialData } from "../../../../database/seedData";
-import User from "../../../../models/User";
-import Tattoo from "../../../../models/Tattoo";
+import prisma from "../../../../utils/prismadb";
 
 
 export async function GET(req) {
@@ -20,31 +18,45 @@ export async function GET(req) {
     }
 
     try {
-        await connect();
+        // await connect();
 
-        await User.deleteMany({});
-        await Tattoo.deleteMany({});
-        // await Product.deleteMany({});
-        // await Order.deleteMany({});
-        await User.insertMany(initialData.users);
+        prisma.user
 
-        // find a randome user with role artist 
+        // delete the existing data
+        await prisma.user.deleteMany({});
+        await prisma.listing.deleteMany({});
+        await prisma.reservation.deleteMany({});
 
-        const user = await User.findOne({ role: 'artist' });
+        // add the new data
+        await prisma.user.createMany({
+            data: initialData.users
+        })
 
-        const tattoos = initialData.tattoos.map(tattoo => {
-            return { ...tattoo, author: user.id }
+        await prisma.listing.createMany({
+            data: initialData.listings
+        })
+
+        await prisma.reservation.createMany({
+            data: initialData.reservations
         })
 
 
-        await Tattoo.insertMany(tattoos);
-        // await Product.insertMany(database.initialData.products);
+        // // find a randome user with role artist 
 
-        await disconnect();
+        // // const user = await User.findOne({ role: 'artist' });
+
+        // const tattoos = initialData.tattoos.map(tattoo => {
+        //     return { ...tattoo, author: user.id }
+        // })
+
+
+        // await Tattoo.insertMany(tattoos);
+        // // await Product.insertMany(database.initialData.products);
+
 
         console.log("Database seeded");
 
-        return NextResponse.json({ count: 101 });
+        return NextResponse.json({ status: 'OK' });
 
     } catch (error) {
 

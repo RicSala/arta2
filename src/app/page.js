@@ -3,6 +3,10 @@ import EmptyState from "../../components/EmptyState";
 import ListingCard from "../../components/listings/ListingCard";
 import { getCurrentUser } from "../../actions/getCurrentUser";
 import getListings from "../../actions/getListings";
+export const dynamic = "force-dynamic";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
+// TODO: pending to solve this
 
 
 export default async function Home({ searchParams }) {
@@ -10,7 +14,6 @@ export default async function Home({ searchParams }) {
   const listings = await getListings(searchParams);
 
   const currentUser = await getCurrentUser();
-  // console.log("FROM PAGE USER", currentUser)
 
 
   if (listings.length === 0) {

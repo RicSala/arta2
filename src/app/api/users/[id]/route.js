@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { connect, disconnect } from "../../../../../database/db";
-import { isValidEmail } from "../../../../../utils/validations";
-import User from "../../../../../models/User";
+import prisma from "../../../../../utils/prismadb";
 
 export async function PUT(req, { params }) {
 
@@ -11,21 +9,10 @@ export async function PUT(req, { params }) {
     // get the updated user from the body of the request
     const updatedUser = await req.json();
 
-    // connect to the database
-    await connect();
-    // find the user by id and update it using findOneAndUpdate
-    const user = await User.findOneAndUpdate({ _id: id }, updatedUser);
-
-    // disconnect from the database
-    await disconnect();
-
-    // return the updated user
-
-
-
-
-
+    const user = await prisma.user.update({
+        where: { id: Number(id) },
+        data: updatedUser
+    })
     return NextResponse.json({ user: user });
-
 }
 

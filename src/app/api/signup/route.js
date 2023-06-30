@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { isValidEmail } from '../../../../utils/validations';
-import { connect, disconnect } from '../../../../database/db';
 import prisma from '../../../../utils/prismadb';
 
 

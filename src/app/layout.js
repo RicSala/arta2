@@ -27,8 +27,6 @@ const font = Nunito({
 
 export default async function RootLayout({ children }) {
 
-  console.log("FROM LAYOUT")
-
   const currentUser = await getCurrentUser();
 
   return (
